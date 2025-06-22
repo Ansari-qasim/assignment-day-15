@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enhanced Registration Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #f0f4f8, #d9e2ec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .submit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .clear-btn {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .clear-btn:hover {
+      background-color: #5a6268;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .submitted-data {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .submitted-data h3 {
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .submitted-data p {
+      margin: 8px 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+      <input type="text" id="name" placeholder="Full Name">
+      <input type="email" id="email" placeholder="Email Address">
+      <input type="tel" id="phone" placeholder="Phone Number">
+      <div class="buttons">
+        <button type="submit" class="submit-btn">Submit</button>
+        <button type="button" class="clear-btn" id="clearBtn">Clear</button>
+      </div>
+      <div id="message" class="message"></div>
+    </form>
+  </div>
+
+  <div class="submitted-data" id="submittedData" style="display: none;">
+    <h3>Submitted Data</h3>
+    <p><strong>Name:</strong> <span id="displayName"></span></p>
+    <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+    <p><strong>Phone:</strong> <span id="displayPhone"></span></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const message = document.getElementById('message');
+    const submittedData = document.getElementById('submittedData');
+    const clearBtn = document.getElementById('clearBtn');
+
+    const displayName = document.getElementById('displayName');
+    const displayEmail = document.getElementById('displayEmail');
+    const displayPhone = document.getElementById('displayPhone');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      message.textContent = '';
+      message.className = 'message';
+      submittedData.style.display = 'none';
+
+      const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+      if (!name || !email || !phone) {
+        message.textContent = 'All fields are required.';
+        message.classList.add('error');
+      } else if (!emailPattern.test(email)) {
+        message.textContent = 'Invalid email format.';
+        message.classList.add('error');
+      } else {
+        // Show success and submitted data
+        message.textContent = 'Submission successful!';
+        message.classList.add('success');
+
+        displayName.textContent = name;
+        displayEmail.textContent = email;
+        displayPhone.textContent = phone;
+        submittedData.style.display = 'block';
+
+        form.reset();
+      }
+    });
+
+    clearBtn.addEventListener('click', function () {
+      form.reset();
+      message.textContent = '';
+      message.className = 'message';
+      submittedData.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
